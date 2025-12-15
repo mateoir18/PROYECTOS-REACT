@@ -1,0 +1,531 @@
+/* ========================================
+   ESTILOS GENERALES
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* Fondo degradado diagonal (135deg): de azul violeta (#667eea) a púrpura (#764ba2) */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* Altura mínima igual al 100% de la pantalla para que el fondo cubra toda la ventana visible */
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* ========================================
+   LOADING (SPINNER)
+   ======================================== */
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: white;
+  padding: 20px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading p {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* ========================================
+   ERROR
+   ======================================== */
+
+.error {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 500px;
+  margin: 100px auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.error h2 {
+  color: #e53e3e;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.error p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* ========================================
+   USUARIOS CONTAINER (LISTA)
+   ======================================== */
+
+.usuarios-container {
+  /* Limita el ancho máximo a 1200px (valor común para buena legibilidad y compatibilidad con la mayoría de pantallas) */
+  max-width: 1200px;
+  /* Centra horizontalmente el contenedor: 0 arriba/abajo, auto en izquierda/derecha */
+  margin: 0 auto;
+}
+
+/* Header de la página */
+header {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* ========================================
+   BUSCADOR
+   ======================================== */
+
+.buscador {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  /*
+   transition Permite que los cambios en las propiedades CSS ocurran de forma suave a lo largo de un período de tiempo, en lugar de instantáneamente
+
+   transform Especifica la propiedad CSS a la que se aplicará la transición. En este caso, cuando la propiedad transform del .buscador cambie (como cuando se le aplica el hover), la transición se activará.
+
+   0.3s: Es la duración de la transición: 0.3 segundos.
+
+   ease: Define la función de temporización (timing function). ease hace que la transición comience lentamente, se acelere en el medio y termine lentamente.
+  */
+  transition: transform 0.3s ease;
+}
+
+.buscador:hover {
+  /*
+  Cuando pasas el ratón por encima del bloque de búsqueda, este se eleva ligeramente 2 píxeles hacia arriba, creando un efecto visual de "flotar".
+
+   El valor -2px significa que el elemento se desplazará 2 píxeles hacia arriba (alejándose de su posición original)
+  */
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.buscador input {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1.1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  /*
+  Indica que todas las propiedades CSS del input que cambien deben hacer una transición suave
+  La duración de la transición (0.3 segundos).
+
+  Suaviza los cambios de color del borde y la sombra del campo de texto cuando el usuario hace clic en él (entra en foco).
+  */
+  transition: all 0.3s ease;
+
+  /*
+  outline: Es una línea que se dibuja fuera del borde del elemento para resaltarlo cuando está activo o enfocado (haciendo clic en él o navegando a él con el teclado). Los navegadores suelen aplicar un outline azul o naranja por defecto.
+
+  none: Elimina ese outline predeterminado del navegador.
+  */
+  outline: none;
+}
+
+.buscador input:focus {
+  /* cuando el usuario hace clic en el campo para escribir */
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.resultados {
+  color: #718096;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ========================================
+   GRID DE USUARIOS
+   ======================================== */
+
+.usuarios-grid {
+  /* Convierte el contenedor .usuarios-grid en un contenedor de cuadrícula */
+  display: grid;
+  /*
+  grid-template-columns: Define cuántas columnas habrá y qué ancho tendrá cada una.
+
+  repeat(): Es una función de CSS que simplifica la repetición de un patrón de columnas.
+
+  auto-fill: Es la clave de la adaptabilidad. Le dice al navegador que cree tantas columnas como sea posible sin que el contenedor se desborde. El número de columnas cambiará automáticamente dependiendo del ancho de la pantalla (viewport).
+
+  minmax(300px, 1fr): Define el rango de ancho de cada columna individual:
+    minmax(): Función que establece un tamaño mínimo y máximo para una columna.
+
+    300px: Es el ancho mínimo que tendrá cualquier columna. Si no hay espacio para una columna de 300px, el diseño se reorganiza automáticamente a menos columnas.
+    
+    1fr: Es el ancho máximo (y preferido). fr significa "fracción de espacio disponible". Indica que cada columna debe ocupar una parte igual del espacio restante disponible en el contenedor. 
+  */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /*
+  Define el espacio (margen) entre las celdas de la cuadrícula. 25px: Especifica un espacio de 25 píxeles tanto entre columnas como entre filas.
+  */
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+/* ========================================
+   TARJETA DE USUARIO (EN LA LISTA)
+   ======================================== */
+
+.usuario-card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  /*
+Esta propiedad controla qué sucede con el contenido que es demasiado grande para caber dentro del área de un elemento (en este caso, la tarjeta de usuario, .usuario-card).
+hidden: Le dice al navegador que oculte (corte) cualquier parte del contenido que se desborde o sobresalga de los límites definidos por el contenedor.
+*/
+  overflow: hidden;
+}
+
+
+.usuario-card::before {
+  /*Before Permite insertar contenido generado por el navegador justo antes del contenido real del elemento seleccionado. */
+  content: ""; /* La propiedad content es obligatoria cuando usas ::before o ::after. Define qué contenido se va a insertar. content: ""; → inserta nada, es decir, un contenido vacío. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transform: scaleX(
+    0
+  ); /* scaleX(0) significa: escala el elemento en el eje horizontal (X) a 0 (es decir, lo hace invisible en ancho, lo "aplasta" completamente). */
+  transition: transform 0.3s ease; /* Esto hace que cualquier cambio en la propiedad transform se anime suavemente en 0.3 segundos. */
+}
+
+.usuario-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.usuario-card:hover::before {
+  transform: scaleX(
+    1
+  ); /* al hacer hover) cambias el transform a scaleX(1), la barra aparecerá animadamente deslizándose de izquierda a derecha. */
+}
+
+.usuario-card h3 {
+  color: #2d3748;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.usuario-card p {
+  color: #4a5568;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.usuario-card button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+}
+
+.usuario-card button:hover {
+    /*
+    El botón se eleva 2 px
+    */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+.usuario-card button:active { /* La pseudo-clase :active (o ::active) se activa en el momento en que mantienes presionado el botón del ratón sobre un elemento (como un enlace, un botón o una tarjeta) y se desactiva justo cuando sueltas el clic. */
+ 
+    /*
+    y vuelve a su posicion original al hacer clic y no soltar
+    */
+  transform: translateY(0);
+}
+
+/* ========================================
+   NO RESULTADOS
+   ======================================== */
+
+.no-resultados {
+  grid-column: 1 / -1; /* El mensaje se estira desde el borde izquierdo hasta el borde derecho de la cuadrícula, sin importar cuántas columnas haya definido el contenedor principal (grid-template-columns). Ocupa el 100% del ancho. */
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 16px;
+  color: #718096;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   DETALLE DE USUARIO (PÁGINA INDIVIDUAL)
+   ======================================== */
+
+.usuario-container {
+  max-width: 800px;
+  /*
+   centrar horizontalmente un bloque de contenido en la página, siempre que tenga un max-width
+  */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.usuario-container .usuario-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.usuario-container .usuario-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 20px 20px 0 0;
+}
+
+.usuario-container h3 {
+  color: #2d3748;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.usuario-container p {
+  color: #4a5568;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f7fafc;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.usuario-container p:hover {
+  background: #edf2f7;
+  transform: translateX(5px);
+}
+
+.back-button {
+  background: white;
+  color: #667eea;
+  padding: 12px 24px;
+  border: 2px solid #667eea;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  display: inline-flex; /* crea un contenedor flexible que se comporta como un elemento en línea.
+  y permite usar alingn-items y gap*/
+  align-items: center;
+  gap: 8px;
+}
+
+.back-button:hover {
+  background: #667eea;
+  color: white;
+  /* Cuando el usuario pasa el ratón por encima del botón "Volver", este no solo cambia de color, sino que se desplaza 5 píxeles hacia la izquierda. y gracias al transition del elemento anterior los cambios se hacen suavemente*/
+  transform: translateX(-5px);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) { /* Aplica todos los estilos que están dentro de estas llaves { ... } solo si el ancho del área visible del navegador (el viewport) es de 768 píxeles o menos." */
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .usuarios-grid {
+    /* Solo una columna */
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .usuario-card {
+    padding: 20px;
+  }
+
+  .buscador {
+    padding: 20px;
+  }
+
+  .usuario-container .usuario-card {
+    padding: 25px;
+  }
+
+  .usuario-container h3 {
+    font-size: 1.8rem;
+  }
+
+  .usuario-container p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  .buscador input {
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+
+  .usuario-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .usuario-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================
+   ANIMACIONES EXTRA
+   ======================================== */
+
+/* Entrada suave de las tarjetas */
+.usuario-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efecto pulso en el buscador cuando está vacío */
+.buscador input:placeholder-shown {
+  animation: subtlePulse 2s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%,
+  100% {
+    border-color: #e2e8f0;
+  }
+  50% {
+    border-color: #cbd5e0;
+  }
+}
+
+/* ========================================
+   DARK MODE (OPCIONAL - COMENTADO)
+   ======================================== */
+
+/*
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+  }
+
+  .usuario-card,
+  .buscador,
+  .usuario-container .usuario-card {
+    background: #2d3748;
+    color: #e2e8f0;
+  }
+
+  .usuario-card h3,
+  .usuario-container h3 {
+    color: #f7fafc;
+  }
+
+  .usuario-card p,
+  .usuario-container p {
+    color: #cbd5e0;
+    background: #1a202c;
+  }
+
+  .buscador input {
+    background: #1a202c;
+    color: #e2e8f0;
+    border-color: #4a5568;
+  }
+
+  .resultados {
+    color: #a0aec0;
+  }
+
+  header {
+    color: #f7fafc;
+  }
+}
+*/

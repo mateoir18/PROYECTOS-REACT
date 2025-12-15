@@ -1,0 +1,165 @@
+/* ===== RESET Y TIPOGRAFÍA ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== BUSCADOR ===== */
+.buscador {
+  margin: 30px 0;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.buscador input {
+  flex: 1; /* ocupa el espacio sobrante del contenedor flex padre*/
+  padding: 14px 18px; /* Vertical - Horizontal */
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.buscador button {
+  padding: 14px 28px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.buscador button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ===== TARJETA PRINCIPAL DEL CLIMA ===== */
+.clima-actual {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 24px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 30px;
+}
+
+.clima-actual h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.temperatura {
+  font-size: 82px;
+  font-weight: 300;
+  margin: 10px 0;
+}
+
+.icono-clima {
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+}
+
+/* ===== PRONÓSTICO DE 5 DÍAS ===== */
+.pronostico {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.dia {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px;
+  width: 130px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.dia:hover {
+  transform: translateY(-8px);
+}
+
+.dia img {
+  width: 50px;
+  height: 50px;
+  margin: 10px 0;
+}
+
+.ultima-actualizacion {
+  margin-top: 20px;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.max {
+  font-size: 20px;
+  font-weight: bold;
+}
+.min {
+  opacity: 0.7;
+}
+
+/*
+=====================================================
+                    DIA EN CONCRETO
+=====================================================
+*/
+
+.concreto {
+  padding: 20px;
+  color: white;
+}
+
+.concreto table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.concreto table tr {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.concreto table th {
+  padding: 12px;
+}
+
+.concreto table td {
+  padding: 10px;
+  text-align: center;
+}
